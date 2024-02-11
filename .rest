@@ -1,0 +1,91 @@
+### get swagger api-doc
+GET http://localhost:3000/swagger/api-docs
+
+### get all owners
+GET http://localhost:3000/owners/getowners
+
+### get a single owner
+GET http://localhost:3000/owners/getowner/<ownerid>
+
+### get all pets
+GET http://localhost:3000/pets/getpets/
+
+### get a single pet
+GET http://localhost:3000/pets/getpet/<petid>
+
+### create a new owner
+POST http://localhost:3000/owners/createowner HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "birthdate": "MM/DD/YYYY",
+  "phone": "1234567890",
+  "email": "fake@fake.com",
+  "address": "Street Address",
+  "city": "City Name",
+  "state": "UT",
+  "pets": [
+    "petid", 
+    "petid"
+    ]
+}
+
+### create a new pet
+POST http://localhost:3000/pets/createpet HTTP/1.1
+Content-Type: application/json
+
+{
+  "petName": "Bowser",
+  "species": "DOG",
+  "petBreed": [
+    "Poodle",
+    "Labrador"
+    ],
+  "mixedBreed": true,
+  "petMarkings": "distinctive",
+  "petSex": "MALE",
+  "petImage": "insert photo url",
+  "petOwner": "ownerid"
+}
+
+### update an owner
+PUT http://localhost:3000/owners/updateowner/<ownerid> HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "birthdate": "MM/DD/YYYY",
+  "phone": "1234567890",
+  "email": "fake@fake.com",
+  "address": "Street Address",
+  "city": "City Name",
+  "state": "UT",
+  "pets": [
+    "petid", 
+    "petid"
+    ]
+  }
+
+### update a pet
+PUT http://localhost:3000/pets/updatepet/<petid> HTTP/1.1
+Content-Type: application/json
+
+{
+  "petName": "Creamy",
+  "species": "CAT",
+  "petBreed": [ "American Shorthair" ],
+  "mixedBreed": false,
+  "petMarkings": "white and orange",
+  "petSex": "FEMALE",
+  "petImage": "insert photo url",
+  "petOwner": "ownerid"
+}
+
+### delete an owner
+DELETE http://localhost:3000/owners/deleteowner/<ownerid> HTTP/1.1
+
+### delete a pet
+DELETE http://localhost:3000/owners/deletepet/<petid> HTTP/1.1
