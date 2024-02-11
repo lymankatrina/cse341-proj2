@@ -1,3 +1,4 @@
+// LOCAL HOST REQUESTS
 ### get swagger api-doc
 GET http://localhost:3000/swagger/api-docs
 
@@ -89,3 +90,95 @@ DELETE http://localhost:3000/owners/deleteowner/<ownerid> HTTP/1.1
 
 ### delete a pet
 DELETE http://localhost:3000/owners/deletepet/<petid> HTTP/1.1
+
+// RENDER REQUESTS
+### get swagger api-doc
+GET https://katrina341.onrender.com/swagger/api-docs/
+### get all owners
+GET https://katrina341.onrender.com/owners/getowners
+
+### get a single owner
+GET https://katrina341.onrender.com/owners/getowner/<ownerid>
+
+### get all pets
+GET https://katrina341.onrender.com/pets/getpets/
+
+### get a single pet
+GET https://katrina341.onrender.com/pets/getpet/<petid>
+
+### create a new owner
+POST https://katrina341.onrender.com/owners/createowner HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "birthdate": "MM/DD/YYYY",
+  "phone": "1234567890",
+  "email": "fake@fake.com",
+  "address": "Street Address",
+  "city": "City Name",
+  "state": "UT",
+  "pets": [
+    "petid", 
+    "petid"
+    ]
+}
+
+### create a new pet
+POST https://katrina341.onrender.com/pets/createpet HTTP/1.1
+Content-Type: application/json
+
+{
+  "petName": "Bowser",
+  "species": "DOG",
+  "petBreed": [
+    "Poodle",
+    "Labrador"
+    ],
+  "mixedBreed": true,
+  "petMarkings": "distinctive",
+  "petSex": "MALE",
+  "petImage": "insert photo url",
+  "petOwner": "ownerid"
+}
+
+### update an owner
+PUT https://katrina341.onrender.com/owners/updateowner/<ownerid> HTTP/1.1
+Content-Type: application/json
+
+{
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "birthdate": "MM/DD/YYYY",
+  "phone": "1234567890",
+  "email": "fake@fake.com",
+  "address": "Street Address",
+  "city": "City Name",
+  "state": "UT",
+  "pets": [
+    "petid", 
+    "petid"
+    ]
+  }
+
+### update a pet
+PUT https://katrina341.onrender.com/pets/updatepet/<petid> HTTP/1.1
+Content-Type: application/json
+
+{
+  "petName": "Creamy",
+  "species": "CAT",
+  "petBreed": [ "American Shorthair" ],
+  "mixedBreed": false,
+  "petMarkings": "white and orange",
+  "petSex": "FEMALE",
+  "petImage": "insert photo url",
+  "petOwner": "ownerid"
+}
+
+### delete an owner
+DELETE https://katrina341.onrender.com/owners/deleteowner/<ownerid> HTTP/1.1
+
+### delete a pet
+DELETE https://katrina341.onrender.com/owners/deletepet/<petid> HTTP/1.1
