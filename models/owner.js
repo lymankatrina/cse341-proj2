@@ -2,11 +2,11 @@
 // const Schema = mongoose.Schema;
 
 // const OwnerSchema = new Schema({
-//   firstName: { 
-//     type: String, 
-//     required: 'Enter a first name' 
+//   firstName: {
+//     type: String,
+//     required: 'Enter a first name'
 //   },
-//   lastName: { 
+//   lastName: {
 //     type: String,
 //     required: 'Enter a last name'
 //   },
@@ -15,8 +15,8 @@
 //     required: 'Enter birthdate MM/DD/YYYY'
 //   },
 //   phone: {
-//     type: Number, 
-//     required: 'Enter 10 digit Phone Number'
+//     type: Integer,
+//     required: 'Enter 10 digit Phone Number with no spaces, dashes, or dots.'
 //   },
 //   email: {
 //     type: String,
@@ -34,6 +34,10 @@
 //     type: String,
 //     required: 'Enter state abreviation'
 //   },
+//   zip: {
+//     type: Integer,
+//     required: 'Enter a 5 digit US Postal Code'
+//   }
 //   pets: [{
 //     type: mongoose.Schema.Types.ObjectId,
 //     ref: 'Pet'

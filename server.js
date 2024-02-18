@@ -13,13 +13,13 @@ app
     next();
   })
   .use('/', require('./routes'));
-  
+
 mongodb.initDb((err) => {
   if (err) {
     console.log(err);
   } else {
     app.listen(port, () => {
-  console.log(`Connected to DB and Web Server is running on port ${port}`);
+      console.log(`Connected to DB and Web Server is running on port ${port}`);
     });
   }
 });

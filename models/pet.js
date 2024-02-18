@@ -8,7 +8,7 @@
 //   petMarkings: { type: String, required: true },
 //   petSex: { type: String, enum: ['MALE', 'FEMALE'], required: true },
 //   petImage: { type: String, required: false },
-//   petOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'Owner' } 
+//   petOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'Owner' }
 // });
 
 // module.exports = mongoose.model("Pet", PetSchema);
