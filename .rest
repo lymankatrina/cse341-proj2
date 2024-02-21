@@ -93,7 +93,7 @@ DELETE http://localhost:3000/owners/deletepet/<petid> HTTP/1.1
 
 // RENDER REQUESTS
 ### get swagger api-doc
-GET https://katrina341.onrender.com/swagger/api-docs/
+GET https://cse341-proj2-898t.onrender.com/swagger/api-docs/
 ### get all owners
 GET https://katrina341.onrender.com/owners/getowners
 
