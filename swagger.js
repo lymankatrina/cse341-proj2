@@ -10,7 +10,8 @@ const doc = {
   info: {
     version: '1.0.0',
     title: 'Pets and Owners API',
-    description: 'This is a simple REST API developed by Katrina Lyman for a school project assignment',
+    description:
+      'This is a simple REST API developed by Katrina Lyman for a school project assignment',
     contact: {
       name: 'KatrinaLyman',
       url: 'https://github.com/lymankatrina/cse341proj2'

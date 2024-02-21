@@ -22,9 +22,7 @@
   "paths": {
     "/owners/createowner": {
       "post": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Create an Owner",
         "description": "Create an Owner by providing all required information.",
         "responses": {
@@ -68,9 +66,7 @@
     },
     "/owners/getowners": {
       "get": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Get all Owners",
         "description": "This will list all owners in the database",
         "responses": {
@@ -82,9 +78,7 @@
     },
     "/owners/getowner/{id}": {
       "get": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Get a single owner by ID",
         "description": "This will return a single owner in the database by owner Id",
         "parameters": [
@@ -109,9 +103,7 @@
     },
     "/owners/getownerbypet/{pets}": {
       "get": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Get a pets owner by pet Id",
         "description": "This will return the owner associated with a single pet in the database by pet Id",
         "parameters": [
@@ -136,9 +128,7 @@
     },
     "/owners/updateowner/{id}": {
       "put": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Update an Owner by Id",
         "description": "Update an existing owner by providing all required information.",
         "parameters": [
@@ -195,9 +185,7 @@
     },
     "/owners/deleteowner/{id}": {
       "delete": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Delete an Owner by Id",
         "description": "This will delete a single owner from the database by Id. This action is permanent.",
         "parameters": [
@@ -225,9 +213,7 @@
     },
     "/pets/createpet": {
       "post": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Create a Pet",
         "description": "Create a Pet by providing all required information.",
         "responses": {
@@ -248,10 +234,7 @@
               "example": {
                 "petName": "Oliver",
                 "species": "DOG",
-                "petBreed": [
-                  "Labrador",
-                  "Poodle"
-                ],
+                "petBreed": ["Labrador", "Poodle"],
                 "mixedBreed": true,
                 "petMarkings": "yellow",
                 "petSex": "MALE",
@@ -265,9 +248,7 @@
     },
     "/pets/getpets": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Get all Pets",
         "description": "This will list all pets in the database",
         "responses": {
@@ -279,9 +260,7 @@
     },
     "/pets/getpet/{id}": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Get a single pet by ID",
         "description": "This will return a single pet in the database by pet Id",
         "parameters": [
@@ -306,9 +285,7 @@
     },
     "/pets/getpetsbyowner/{id}": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Get pets by owner Id",
         "description": "This will return a list of all pets associated with a single owner in the database by petOwner Id",
         "parameters": [
@@ -333,9 +310,7 @@
     },
     "/pets/getpetsbyspecies/{species}": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Get all pets by species",
         "description": "This will return a list of all pets by species",
         "parameters": [
@@ -360,9 +335,7 @@
     },
     "/pets/updatepet/{id}": {
       "put": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Update a Pet by Id",
         "description": "Update an existing pet by providing all required information.",
         "parameters": [
@@ -396,10 +369,7 @@
               "example": {
                 "petName": "Oliver",
                 "species": "DOG",
-                "petBreed": [
-                  "Labrador",
-                  "Poodle"
-                ],
+                "petBreed": ["Labrador", "Poodle"],
                 "mixedBreed": true,
                 "petMarkings": "yellow",
                 "petSex": "MALE",
@@ -413,9 +383,7 @@
     },
     "/pets/updatepetowner/{id}": {
       "put": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Update a pets pet owner by pet Id",
         "description": "To update the pet owner id of a single pet, enter the pet Id and new pet owner id",
         "parameters": [
@@ -454,9 +422,7 @@
     },
     "/pets/deletepet/{id}": {
       "delete": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Delete an existing pet by Id",
         "description": "This will delete a single pet from the database by pet Id. This action is permanent",
         "parameters": [
