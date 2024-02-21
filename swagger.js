@@ -13,7 +13,7 @@ const doc = {
     description: 'This is a simple REST API developed by for a school project assignment',
     contact: {
       name: 'KatrinaLyman',
-      url: 'https://github.com/lymankatrina/cse341-proj2'
+      url: 'https://github.com/lymankatrina/cse341proj2'
     }
   },
   servers: [
@@ -22,7 +22,7 @@ const doc = {
       description: 'Local development server'
     },
     {
-      url: 'https://cse341-proj2-898t.onrender.com/',
+      url: 'https://cse341proj2-898t.onrender.com/',
       description: 'Render website'
     }
   ],

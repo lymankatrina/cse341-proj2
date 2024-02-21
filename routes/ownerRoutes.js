@@ -10,15 +10,15 @@ router.post('/createowner', ownerValidationRules(), validate, ownerController.cr
 router.get('/getowners', ownerController.getAllOwners);
 
 // Get a single owner by owner id
-router.get('/getowner/:ownerid', ownerController.getSingleOwner);
+router.get('/getowner/:id', ownerController.getSingleOwner);
 
-// // Get a single owner by pet id
-// router.get('/getownerbypet/:petid', ownerController.getOwnerByPet);
+// Get a single owner by pet id
+router.get('/getownerbypet/:pets', ownerController.getOwnerByPet);
 
 // Update a single owner by id
-router.put('/updateowner/:ownerid', ownerValidationRules(), validate, ownerController.updateOwner);
+router.put('/updateowner/:id', ownerValidationRules(), validate, ownerController.updateOwner);
 
 // Delete an owner
-router.delete('/deleteowner/:ownerid', ownerController.deleteOwner);
+router.delete('/deleteowner/:id', ownerController.deleteOwner);
 
 module.exports = router;

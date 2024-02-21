@@ -6,7 +6,7 @@
     "description": "This is a simple REST API developed by for a school project assignment",
     "contact": {
       "name": "KatrinaLyman",
-      "url": "https://github.com/lymankatrina/cse341-proj2"
+      "url": "https://github.com/lymankatrina/cse341proj2"
     }
   },
   "servers": [
@@ -15,16 +15,14 @@
       "description": "Local development server"
     },
     {
-      "url": "https://cse341-proj2-898t.onrender.com/",
+      "url": "https://cse341proj2-898t.onrender.com/",
       "description": "Render website"
     }
   ],
   "paths": {
     "/owners/createowner": {
       "post": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Create an Owner",
         "description": "Create an Owner by providing all required information.",
         "responses": {
@@ -53,8 +51,12 @@
                 "state": "UT",
                 "zip": 84000,
                 "pets": [
-                  "65c6f5ecd51fdd04775b0a48",
-                  "65c6f726d51fdd04775b0a54"
+                  {
+                    "petId": "65c6f5ecd51fdd04775b0a48"
+                  },
+                  {
+                    "petId": "65c6f726d51fdd04775b0a54"
+                  }
                 ]
               }
             }
@@ -64,9 +66,7 @@
     },
     "/owners/getowners": {
       "get": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Get all Owners",
         "description": "This will list all owners in the database",
         "responses": {
@@ -76,16 +76,14 @@
         }
       }
     },
-    "/owners/getowner/{ownerid}": {
+    "/owners/getowner/{id}": {
       "get": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Get a single owner by ID",
         "description": "This will return a single owner in the database by owner Id",
         "parameters": [
           {
-            "name": "ownerid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -103,16 +101,39 @@
         }
       }
     },
-    "/owners/updateowner/{ownerid}": {
-      "put": {
-        "tags": [
-          "Owners"
+    "/owners/getownerbypet/{pets}": {
+      "get": {
+        "tags": ["Owners"],
+        "summary": "Get a pets owner by pet Id",
+        "description": "This will return the owner associated with a single pet in the database by pet Id",
+        "parameters": [
+          {
+            "name": "pets",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/owners/updateowner/{id}": {
+      "put": {
+        "tags": ["Owners"],
         "summary": "Update an Owner by Id",
         "description": "Update an existing owner by providing all required information.",
         "parameters": [
           {
-            "name": "ownerid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -149,8 +170,12 @@
                 "state": "UT",
                 "zip": 84000,
                 "pets": [
-                  "65c6f5ecd51fdd04775b0a48",
-                  "65c6f726d51fdd04775b0a54"
+                  {
+                    "petId": "65c6f5ecd51fdd04775b0a48"
+                  },
+                  {
+                    "petId": "65c6f726d51fdd04775b0a54"
+                  }
                 ]
               }
             }
@@ -158,16 +183,14 @@
         }
       }
     },
-    "/owners/deleteowner/{ownerid}": {
+    "/owners/deleteowner/{id}": {
       "delete": {
-        "tags": [
-          "Owners"
-        ],
+        "tags": ["Owners"],
         "summary": "Delete an Owner by Id",
         "description": "This will delete a single owner from the database by Id. This action is permanent.",
         "parameters": [
           {
-            "name": "ownerid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -190,9 +213,7 @@
     },
     "/pets/createpet": {
       "post": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Create a Pet",
         "description": "Create a Pet by providing all required information.",
         "responses": {
@@ -213,10 +234,7 @@
               "example": {
                 "petName": "Oliver",
                 "species": "DOG",
-                "petBreed": [
-                  "Labrador",
-                  "Poodle"
-                ],
+                "petBreed": ["Labrador", "Poodle"],
                 "mixedBreed": true,
                 "petMarkings": "yellow",
                 "petSex": "MALE",
@@ -230,9 +248,7 @@
     },
     "/pets/getpets": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Get all Pets",
         "description": "This will list all pets in the database",
         "responses": {
@@ -242,16 +258,14 @@
         }
       }
     },
-    "/pets/getpet/{petid}": {
+    "/pets/getpet/{id}": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Get a single pet by ID",
         "description": "This will return a single pet in the database by pet Id",
         "parameters": [
           {
-            "name": "petid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -269,16 +283,14 @@
         }
       }
     },
-    "/pets/getpetsbyowner/{ownerid}": {
+    "/pets/getpetsbyowner/{id}": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Get pets by owner Id",
         "description": "This will return a list of all pets associated with a single owner in the database by petOwner Id",
         "parameters": [
           {
-            "name": "ownerid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -298,9 +310,7 @@
     },
     "/pets/getpetsbyspecies/{species}": {
       "get": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Get all pets by species",
         "description": "This will return a list of all pets by species",
         "parameters": [
@@ -323,16 +333,14 @@
         }
       }
     },
-    "/pets/updatepet/{petid}": {
+    "/pets/updatepet/{id}": {
       "put": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Update a Pet by Id",
         "description": "Update an existing pet by providing all required information.",
         "parameters": [
           {
-            "name": "petid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -361,10 +369,7 @@
               "example": {
                 "petName": "Oliver",
                 "species": "DOG",
-                "petBreed": [
-                  "Labrador",
-                  "Poodle"
-                ],
+                "petBreed": ["Labrador", "Poodle"],
                 "mixedBreed": true,
                 "petMarkings": "yellow",
                 "petSex": "MALE",
@@ -376,16 +381,14 @@
         }
       }
     },
-    "/pets/updatepetowner/{petid}": {
+    "/pets/updatepetowner/{id}": {
       "put": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Update a pets pet owner by pet Id",
         "description": "To update the pet owner id of a single pet, enter the pet Id and new pet owner id",
         "parameters": [
           {
-            "name": "petid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -417,16 +420,14 @@
         }
       }
     },
-    "/pets/deletepet/{petid}": {
+    "/pets/deletepet/{id}": {
       "delete": {
-        "tags": [
-          "Pets"
-        ],
+        "tags": ["Pets"],
         "summary": "Delete an existing pet by Id",
         "description": "This will delete a single pet from the database by pet Id. This action is permanent",
         "parameters": [
           {
-            "name": "petid",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {

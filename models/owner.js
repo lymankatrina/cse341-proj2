@@ -38,10 +38,13 @@
 //     type: Integer,
 //     required: 'Enter a 5 digit US Postal Code'
 //   }
-//   pets: [{
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'Pet'
-//   }]
+//   pets: [
+//     {
+//     petId: {
+//       type: mongoose.Schema.Types.ObjectId,
+//       ref: 'Pet' }
+//     }
+//   ]
 // });
 
 // module.exports = mongoose.model("Owner", OwnerSchema);

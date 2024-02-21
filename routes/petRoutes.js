@@ -10,21 +10,21 @@ router.post('/createpet', petValidationRules(), validate, petController.createPe
 router.get('/getpets', petController.getAllPets);
 
 // Get a single pet by pet id
-router.get('/getpet/:petid', petController.getSinglePet);
+router.get('/getpet/:id', petController.getSinglePet);
 
 // Get pets by owner id
-router.get('/getpetsbyowner/:ownerid', petController.getPetsByOwner);
+router.get('/getpetsbyowner/:id', petController.getPetsByOwner);
 
 // Get pets by species
 router.get('/getpetsbyspecies/:species', petController.getPetsBySpecies);
 
 // Update a single pet by id
-router.put('/updatepet/:petid', petValidationRules(), validate, petController.updatePet);
+router.put('/updatepet/:id', petValidationRules(), validate, petController.updatePet);
 
 // Update pet owner by id
-router.put('/updatepetowner/:petid', petController.updatePetOwnerId);
+router.put('/updatepetowner/:id', petController.updatePetOwnerId);
 
 // Delete an pet
-router.delete('/deletepet/:petid', petController.deletePet);
+router.delete('/deletepet/:id', petController.deletePet);
 
 module.exports = router;
