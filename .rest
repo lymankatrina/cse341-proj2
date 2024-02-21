@@ -93,21 +93,21 @@ DELETE http://localhost:3000/owners/deletepet/<petid> HTTP/1.1
 
 // RENDER REQUESTS
 ### get swagger api-doc
-GET https://cse341-proj2-898t.onrender.com/swagger/api-docs/
+GET https://cse341proj2.onrender.com/swagger/api-docs/
 ### get all owners
-GET https://katrina341.onrender.com/owners/getowners
+GET https://cse341proj2.onrender.com/owners/getowners
 
 ### get a single owner
-GET https://katrina341.onrender.com/owners/getowner/<ownerid>
+GET https://cse341proj2.onrender.com/owners/getowner/<ownerid>
 
 ### get all pets
-GET https://katrina341.onrender.com/pets/getpets/
+GET https://cse341proj2.onrender.com/pets/getpets/
 
 ### get a single pet
-GET https://katrina341.onrender.com/pets/getpet/<petid>
+GET https://cse341proj2.onrender.com/pets/getpet/<petid>
 
 ### create a new owner
-POST https://katrina341.onrender.com/owners/createowner HTTP/1.1
+POST https://cse341proj2.onrender.com/owners/createowner HTTP/1.1
 Content-Type: application/json
 
 {
@@ -126,7 +126,7 @@ Content-Type: application/json
 }
 
 ### create a new pet
-POST https://katrina341.onrender.com/pets/createpet HTTP/1.1
+POST https://cse341proj2.onrender.com/pets/createpet HTTP/1.1
 Content-Type: application/json
 
 {
@@ -144,7 +144,7 @@ Content-Type: application/json
 }
 
 ### update an owner
-PUT https://katrina341.onrender.com/owners/updateowner/<ownerid> HTTP/1.1
+PUT https://cse341proj2.onrender.com/owners/updateowner/<ownerid> HTTP/1.1
 Content-Type: application/json
 
 {
@@ -157,13 +157,13 @@ Content-Type: application/json
   "city": "City Name",
   "state": "UT",
   "pets": [
-    "petid", 
-    "petid"
+    { "petId": "" }, 
+    { "petid": "" }
     ]
   }
 
 ### update a pet
-PUT https://katrina341.onrender.com/pets/updatepet/<petid> HTTP/1.1
+PUT https://cse341proj2.onrender.com/pets/updatepet/<petid> HTTP/1.1
 Content-Type: application/json
 
 {
@@ -178,7 +178,7 @@ Content-Type: application/json
 }
 
 ### delete an owner
-DELETE https://katrina341.onrender.com/owners/deleteowner/<ownerid> HTTP/1.1
+DELETE https://cse341proj2.onrender.com/owners/deleteowner/<ownerid> HTTP/1.1
 
 ### delete a pet
-DELETE https://katrina341.onrender.com/owners/deletepet/<petid> HTTP/1.1
+DELETE https://cse341proj2.onrender.com/pets/deletepet/<petid> HTTP/1.1

@@ -23,7 +23,7 @@ const doc = {
       description: 'Local development server'
     },
     {
-      url: 'https://cse341proj2-898t.onrender.com/',
+      url: 'https://cse341proj2.onrender.com/',
       description: 'Render website'
     }
   ],
