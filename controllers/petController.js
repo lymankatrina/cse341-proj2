@@ -53,7 +53,7 @@ exports.getPetsBySpecies = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Get all pets by species'
   // #swagger.description = 'This will return a list of all pets by species'
-  const petSpecies = req.params.id;
+  const petSpecies = req.params.species;
   const result = await mongodb.getDb().db().collection('pets').find({ species: petSpecies });
   result.toArray().then((lists) => {
     if (lists.length > 0) {
