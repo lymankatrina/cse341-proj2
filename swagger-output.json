@@ -31,9 +31,6 @@
           },
           "404": {
             "description": "Not Found"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
           }
         },
         "requestBody": {
@@ -148,9 +145,6 @@
           "404": {
             "description": "Not Found"
           },
-          "422": {
-            "description": "Unprocessable Entity"
-          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -222,9 +216,6 @@
           },
           "404": {
             "description": "Not Found"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
           }
         },
         "requestBody": {
@@ -354,9 +345,6 @@
           },
           "404": {
             "description": "Not Found"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
           },
           "500": {
             "description": "Internal Server Error"
