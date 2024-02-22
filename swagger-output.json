@@ -193,6 +193,49 @@
         }
       }
     },
+    "/owners/updateOwnerPetIds/{id}": {
+      "put": {
+        "tags": [
+          "Owners"
+        ],
+        "summary": "Add Pet Id",
+        "description": "Update an existing owner by adding Pet Id numbers.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "pets": "65c6f5ecd51fdd04775b0a48"
+              }
+            }
+          }
+        }
+      }
+    },
     "/owners/deleteowner/{id}": {
       "delete": {
         "tags": [
@@ -363,8 +406,8 @@
         "tags": [
           "Pets"
         ],
-        "summary": "Update a Pet by Id",
-        "description": "Update an existing pet by providing all required information.",
+        "summary": "Update a Pet",
+        "description": "Update a Pet by providing all required information.",
         "parameters": [
           {
             "name": "id",
@@ -432,20 +475,19 @@
           "204": {
             "description": "No Content"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "petOwner": {
-                    "example": "any"
-                  }
-                }
+              "example": {
+                "petOwner": "65c6f5ecd51fdd04775b0a48"
               }
             }
           }

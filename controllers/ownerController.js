@@ -58,7 +58,7 @@ exports.createOwner = async (req, res) => {
   // #swagger.tags = ['Owners']
   // #swagger.summary = 'Create an Owner'
   // #swagger.description = 'Create an Owner by providing all required information.'
-  /*  
+  /*
   #swagger.requestBody = {
     required: true,
     content: {
@@ -108,7 +108,8 @@ exports.updateOwner = async (req, res) => {
   // #swagger.tags = ['Owners']
   // #swagger.summary = 'Update an Owner by Id'
   // #swagger.description = 'Update an existing owner by providing all required information.'
-  /*  
+  /*
+  /*
   #swagger.requestBody = {
     required: true,
     content: {
@@ -124,7 +125,8 @@ exports.updateOwner = async (req, res) => {
           state: "UT",
           zip: 84000,
           pets: [
-            { petId: "65c6f5ecd51fdd04775b0a48" }, { petId: "65c6f726d51fdd04775b0a54" }
+            { petId: "65c6f5ecd51fdd04775b0a48" },
+            { petId: "65c6f726d51fdd04775b0a54" }
           ]
         }
       }
@@ -149,6 +151,42 @@ exports.updateOwner = async (req, res) => {
     .db()
     .collection('owners')
     .replaceOne({ _id: ownerId }, owner);
+  console.log(response);
+  if (response.modifiedCount > 0) {
+    res.status(204).send();
+  } else if (response.modifiedCount <= 0) {
+    res.status(404).json({ error: 'Owner not found' });
+  } else {
+    res.status(500).json({ error: 'An error occurred during the update owner request.' });
+  }
+};
+
+// Add Pet Id(s) to Owner
+exports.updateOwnerPetIds = async (req, res) => {
+  // #swagger.tags = ['Owners']
+  // #swagger.summary = 'Add Pet Id's to an Owner by Owner Id'
+  // #swagger.description = 'Update an existing owner by adding Pet Id numbers.'
+  /*
+  #swagger.requestBody = {
+    required: true,
+    content: {
+      'application/json': {
+        example: {
+          pets: "65c6f5ecd51fdd04775b0a48"
+        }
+      }
+    }
+  }
+  */
+  const ownerId = new ObjectId(req.params.id);
+  const petIds = {
+    pets: req.body.pets
+  };
+  const response = await mongodb
+    .getDb()
+    .db()
+    .collection('owners')
+    .updateOne({ _id: ownerId }, { $set: petIds }, { upsert: false });
   console.log(response);
   if (response.modifiedCount > 0) {
     res.status(204).send();

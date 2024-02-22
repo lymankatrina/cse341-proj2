@@ -56,7 +56,7 @@ const ownerValidationRules = (method) => {
           const petId = value[i];
 
           if (!ObjectId.isValid(petId)) {
-            throw new Error(`Invalid ObjectId: ${petId}`);
+            throw new Error('Invalid Pet Id');
           }
 
           const pet = await mongodb

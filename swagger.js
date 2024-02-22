@@ -28,11 +28,14 @@ const doc = {
     }
   ],
   paths: {},
+  schemes: {},
+  produces: {},
   tags: [],
+  definitions: {},
   components: {}
 };
 
 const outputFile = './swagger-output.json';
-const routes = ['./routes/index.js'];
+const endpointsFile = ['./server.js'];
 
-swaggerAutogen(outputFile, routes, doc);
+swaggerAutogen(outputFile, endpointsFile, doc);

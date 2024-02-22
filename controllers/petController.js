@@ -73,7 +73,7 @@ exports.createPet = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Create a Pet'
   // #swagger.description = 'Create a Pet by providing all required information.'
-  /*  
+  /*
   #swagger.requestBody = {
     required: true,
     content: {
@@ -117,9 +117,9 @@ exports.createPet = async (req, res) => {
 // update one pet
 exports.updatePet = async (req, res) => {
   // #swagger.tags = ['Pets']
-  // #swagger.summary = 'Update a Pet by Id'
-  // #swagger.description = 'Update an existing pet by providing all required information.'
-  /*  
+  // #swagger.summary = 'Update a Pet'
+  // #swagger.description = 'Update a Pet by providing all required information.'
+  /*
   #swagger.requestBody = {
     required: true,
     content: {
@@ -168,6 +168,18 @@ exports.updatePetOwnerId = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Update a pets pet owner by pet Id'
   // #swagger.description = 'To update the pet owner id of a single pet, enter the pet Id and new pet owner id'
+  /*
+  #swagger.requestBody = {
+    required: true,
+    content: {
+      "application/json": {
+        example: {
+          petOwner: '65c6f5ecd51fdd04775b0a48'
+        }
+      }
+    }
+  }
+  */
   const thisPetId = new ObjectId(req.params.id);
   const newPetOwner = {
     petOwner: req.body.petOwner
@@ -180,8 +192,10 @@ exports.updatePetOwnerId = async (req, res) => {
   console.log(response);
   if (response.modifiedCount > 0) {
     res.status(204).send();
+  } else if (response.modifiedCount <= 0) {
+    res.status(404).json({ error: 'Pet not found' });
   } else {
-    res.status(500).json(response.error || 'An error occured in the update pet owner request.');
+    res.status(500).json({ error: 'An error occurred during the update pet request.' });
   }
 };
 
