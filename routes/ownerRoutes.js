@@ -19,9 +19,7 @@ router.get('/getownerbypet/:pets', ownerController.getOwnerByPet);
 router.put('/updateowner/:id', ownerValidationRules(), validate, ownerController.updateOwner);
 
 // Update an owners pets by owner id
-router.put(
-  '/updateOwnerPetIds/:id', ownerController.updateOwnerPetIds
-);
+router.put('/updateOwnerPetIds/:id', ownerController.updateOwnerPetIds);
 
 // Delete an owner
 router.delete('/deleteowner/:id', ownerController.deleteOwner);
