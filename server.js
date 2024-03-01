@@ -1,25 +1,26 @@
 const express = require('express');
+const dotenv = require('dotenv');
+const { connectDb } = require('./config/connect');
 const cors = require('cors');
-const mongodb = require('./db/connect');
-const app = express();
-const port = process.env.PORT || 3000;
+// const setupSession = require('./middleware/sessions');
+// const oauthMiddleware = require('./middleware/oauthMiddleware');
 
-app
-  .use(cors())
-  .use(express.json())
-  .use(express.urlencoded({ extended: true }))
-  .use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    next();
-  })
-  .use('/', require('./routes'));
+// Load config
+dotenv.config({ path: './config/.env' });
 
-mongodb.initDb((err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(port, () => {
-      console.log(`Connected to DB and Web Server is running on port ${port}`);
-    });
-  }
+connectDb().then(() => {
+  const app = express();
+
+  app.use(express.urlencoded({ extended: false }));
+  // app.use(express.json());
+  // setupSession(app);
+  app.use(cors());
+  // app.use(oauthMiddleware);
+  app.use('/', require('./routes'));
+
+  const PORT = process.env.PORT || 3000;
+
+  app.listen(PORT, () => {
+    console.log(`Connected to DB and Web Server is running on port ${PORT}`);
+  });
 });
