@@ -36,20 +36,24 @@ exports.getOwnerByPet = async (req, res) => {
   // #swagger.tags = ['Owners']
   // #swagger.summary = 'Get a pets owner by pet Id'
   // #swagger.description = 'This will return the owner associated with a single pet in the database by pet Id'
-  const petId = req.params.pets;
-  const result = await mongodb
-    .getDb()
-    .db()
-    .collection('owners')
-    .find({ pets: { petId: petId } });
-  result.toArray().then((owners) => {
+  const petId = req.params.petId;
+  try {
+    const owners = await mongodb
+      .getDb()
+      .db()
+      .collection('owners')
+      .find({ pets: { $in: [petId] } })
+      .toArray();
     if (owners.length > 0) {
       res.setHeader('Content-Type', 'application/json');
       res.status(200).json(owners);
     } else {
       res.status(404).json({ error: 'No owners found by that pet Id' });
     }
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
 
 /* POST REQUESTS */
@@ -74,8 +78,8 @@ exports.createOwner = async (req, res) => {
           state: "UT",
           zip: 84000,
           pets: [
-            { petId: "65c6f5ecd51fdd04775b0a48" },
-            { petId: "65c6f726d51fdd04775b0a54" }
+            "65c6f5ecd51fdd04775b0a48",
+            "65c6f5ecd51fdd04775b0a49"
           ]
         }
       }
@@ -92,7 +96,7 @@ exports.createOwner = async (req, res) => {
     city: req.body.city,
     state: req.body.state,
     zip: req.body.zip,
-    pets: [{ petId: req.body.pets }]
+    pets: [req.body.pets]
   };
   const response = await mongodb.getDb().db().collection('owners').insertOne(owner);
   if (response.acknowledged) {
@@ -125,8 +129,7 @@ exports.updateOwner = async (req, res) => {
           state: "UT",
           zip: 84000,
           pets: [
-            { petId: "65c6f5ecd51fdd04775b0a48" },
-            { petId: "65c6f726d51fdd04775b0a54" }
+            "65c6f726d51fdd04775b0a54"
           ]
         }
       }
@@ -144,7 +147,7 @@ exports.updateOwner = async (req, res) => {
     city: req.body.city,
     state: req.body.state,
     zip: req.body.zip,
-    pets: [{ petId: req.body.pets }]
+    pets: [req.body.pets]
   };
   const response = await mongodb
     .getDb()
@@ -172,28 +175,31 @@ exports.updateOwnerPetIds = async (req, res) => {
     content: {
       'application/json': {
         example: {
-          pets: "65c6f5ecd51fdd04775b0a48"
+          pets: [
+            "65c6f726d51fdd04775b0a54",
+            "65c6f726d51fdd04775b0a55"
+          ]
         }
       }
     }
   }
   */
   const ownerId = new ObjectId(req.params.id);
-  const petIds = {
-    pets: req.body.pets
-  };
-  const response = await mongodb
-    .getDb()
-    .db()
-    .collection('owners')
-    .updateOne({ _id: ownerId }, { $set: petIds }, { upsert: false });
-  console.log(response);
-  if (response.modifiedCount > 0) {
-    res.status(204).send();
-  } else if (response.modifiedCount <= 0) {
-    res.status(404).json({ error: 'Owner not found' });
-  } else {
-    res.status(500).json({ error: 'An error occurred during the update owner request.' });
+  const petIds = req.body.pets;
+  try {
+    const response = await mongodb
+      .getDb()
+      .db()
+      .collection('owners')
+      .updateOne({ _id: ownerId }, { $addToSet: { pets: { $each: petIds } } });
+    if (response.modifiedCount > 0) {
+      res.status(204).send();
+    } else if (response.modifiedCount <= 0) {
+      res.status(404).json({ error: 'Owner not found' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 

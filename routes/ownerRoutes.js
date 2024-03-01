@@ -13,7 +13,7 @@ router.get('/getowners', ownerController.getAllOwners);
 router.get('/getowner/:id', ownerController.getSingleOwner);
 
 // Get a single owner by pet id
-router.get('/getownerbypet/:pets', ownerController.getOwnerByPet);
+router.get('/getownerbypet/:petId', ownerController.getOwnerByPet);
 
 // Update a single owner by id
 router.put('/updateowner/:id', ownerValidationRules(), validate, ownerController.updateOwner);

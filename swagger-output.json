@@ -53,12 +53,8 @@
                 "state": "UT",
                 "zip": 84000,
                 "pets": [
-                  {
-                    "petId": "65c6f5ecd51fdd04775b0a48"
-                  },
-                  {
-                    "petId": "65c6f726d51fdd04775b0a54"
-                  }
+                  "65c6f5ecd51fdd04775b0a48",
+                  "65c6f5ecd51fdd04775b0a49"
                 ]
               }
             }
@@ -107,7 +103,7 @@
         }
       }
     },
-    "/owners/getownerbypet/{pets}": {
+    "/owners/getownerbypet/{petId}": {
       "get": {
         "tags": [
           "Owners"
@@ -116,7 +112,7 @@
         "description": "This will return the owner associated with a single pet in the database by pet Id",
         "parameters": [
           {
-            "name": "pets",
+            "name": "petId",
             "in": "path",
             "required": true,
             "schema": {
@@ -130,6 +126,9 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -180,12 +179,7 @@
                 "state": "UT",
                 "zip": 84000,
                 "pets": [
-                  {
-                    "petId": "65c6f5ecd51fdd04775b0a48"
-                  },
-                  {
-                    "petId": "65c6f726d51fdd04775b0a54"
-                  }
+                  "65c6f726d51fdd04775b0a54"
                 ]
               }
             }
@@ -229,7 +223,10 @@
           "content": {
             "application/json": {
               "example": {
-                "pets": "65c6f5ecd51fdd04775b0a48"
+                "pets": [
+                  "65c6f726d51fdd04775b0a54",
+                  "65c6f726d51fdd04775b0a55"
+                ]
               }
             }
           }
@@ -347,7 +344,7 @@
         }
       }
     },
-    "/pets/getpetsbyowner/{id}": {
+    "/pets/getpetsbyowner/{petOwnerId}": {
       "get": {
         "tags": [
           "Pets"
@@ -356,7 +353,7 @@
         "description": "This will return a list of all pets associated with a single owner in the database by petOwner Id",
         "parameters": [
           {
-            "name": "id",
+            "name": "petOwnerId",
             "in": "path",
             "required": true,
             "schema": {
@@ -459,7 +456,7 @@
         "tags": [
           "Pets"
         ],
-        "summary": "Update a pets pet owner by pet Id",
+        "summary": "Update a pets owner by pet Id",
         "description": "To update the pet owner id of a single pet, enter the pet Id and new pet owner id",
         "parameters": [
           {
@@ -520,6 +517,19 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }

@@ -36,7 +36,7 @@ exports.getPetsByOwner = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Get pets by owner Id'
   // #swagger.description = 'This will return a list of all pets associated with a single owner in the database by petOwner Id'
-  const petOwnerId = req.params.id;
+  const petOwnerId = req.params.petOwnerId;
   const result = await mongodb.getDb().db().collection('pets').find({ petOwner: petOwnerId });
   result.toArray().then((lists) => {
     if (lists.length > 0) {
@@ -166,7 +166,7 @@ exports.updatePet = async (req, res) => {
 // update one pet owner id
 exports.updatePetOwnerId = async (req, res) => {
   // #swagger.tags = ['Pets']
-  // #swagger.summary = 'Update a pets pet owner by pet Id'
+  // #swagger.summary = 'Update a pets owner by pet Id'
   // #swagger.description = 'To update the pet owner id of a single pet, enter the pet Id and new pet owner id'
   /*
   #swagger.requestBody = {

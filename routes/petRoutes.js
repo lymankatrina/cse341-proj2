@@ -13,7 +13,7 @@ router.get('/getpets', petController.getAllPets);
 router.get('/getpet/:id', petController.getSinglePet);
 
 // Get pets by owner id
-router.get('/getpetsbyowner/:id', petController.getPetsByOwner);
+router.get('/getpetsbyowner/:petOwnerId', petController.getPetsByOwner);
 
 // Get pets by species
 router.get('/getpetsbyspecies/:species', petController.getPetsBySpecies);
