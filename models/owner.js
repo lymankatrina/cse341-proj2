@@ -43,4 +43,4 @@
 //   }]
 // });
 
-// module.exports = mongoose.model("Owner", OwnerSchema);
+// module.exports = mongoose.model('Owner', OwnerSchema);
