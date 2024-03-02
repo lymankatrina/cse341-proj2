@@ -5,6 +5,7 @@ routes
   .use('/', require('./dashboard'))
   .use('/', require('./swagger'))
   .use('/owners', require('./ownerRoutes'))
-  .use('/pets', require('./petRoutes'));
+  .use('/pets', require('./petRoutes'))
+  .use('/lookup', require('./lookupRoutes'));
 
 module.exports = routes;

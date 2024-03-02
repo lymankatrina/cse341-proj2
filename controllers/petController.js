@@ -7,10 +7,12 @@ exports.getPetsGeneric = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Get pets without names and owner ids'
   // #swagger.description = 'This will list all pets in the database without providing specific pet or owner identifiers'
-  const result = await mongodb.getDb().db().collection('pets').find().project({_id: 0,
-    petName: 0,
-    petImage: 0,
-    petOwner: 0});
+  const result = await mongodb
+    .getDb()
+    .db()
+    .collection('pets')
+    .find()
+    .project({ _id: 0, petName: 0, petImage: 0, petOwner: 0 });
   result.toArray().then((lists) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(lists);

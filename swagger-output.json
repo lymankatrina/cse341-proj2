@@ -534,6 +534,20 @@
           }
         }
       }
+    },
+    "/lookup/mailingLabels": {
+      "get": {
+        "tags": [
+          "Lookup"
+        ],
+        "summary": "Get pet name, owner name and mailing address",
+        "description": "This will list all pets with their owners name and address information",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }
