@@ -1,5 +1,5 @@
-// bring in Model
-const Pet = require('../models/Pet');
+const mongodb = require('../db/connect');
+const ObjectId = require('mongodb').ObjectId;
 
 /* GET REQUESTS */
 // get all pets
@@ -7,14 +7,11 @@ exports.getAllPets = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Get all Pets'
   // #swagger.description = 'This will list all pets in the database'
-  try {
-    const pets = await Pet.find();
+  const result = await mongodb.getDb().db().collection('pets').find();
+  result.toArray().then((lists) => {
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json({ data: pets });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+    res.status(200).json(lists);
+  });
 };
 
 // get a single pet
@@ -22,19 +19,16 @@ exports.getSinglePet = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Get a single pet by ID'
   // #swagger.description = 'This will return a single pet in the database by pet Id'
-  try {
-    const petId = req.params.id;
-    const pet = await Pet.findById(petId);
-    if (pet) {
+  const petId = new ObjectId(req.params.id);
+  const result = await mongodb.getDb().db().collection('pets').find({ _id: petId });
+  result.toArray().then((lists) => {
+    if (lists.length > 0) {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json({ data: pet });
+      res.status(200).json(lists[0]);
     } else {
       res.status(404).json({ error: 'Pet not found' });
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  });
 };
 
 // get all pets by single owner Id
@@ -47,14 +41,11 @@ exports.getPetsByOwner = async (req, res) => {
   result.toArray().then((lists) => {
     if (lists.length > 0) {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json({ data: pets });
+      res.status(200).json(lists);
     } else {
       res.status(404).json({ error: 'No pets found by that owner Id' });
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  });
 };
 
 // get all pets by species
@@ -62,21 +53,18 @@ exports.getPetsBySpecies = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Get all pets by species'
   // #swagger.description = 'This will return a list of all pets by species'
-  try {
-    const petSpecies = req.params.species;
-    const pets = await Pet.find({ species: petSpecies });
-    if (pets.length > 0) {
+  const petSpecies = req.params.species;
+  const result = await mongodb.getDb().db().collection('pets').find({ species: petSpecies });
+  result.toArray().then((lists) => {
+    if (lists.length > 0) {
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).json({ data: pets });
+      res.status(200).json(lists);
     } else {
       res
         .status(404)
         .json({ error: 'No pets found by that species. Available species are DOG or CAT' });
     }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  });
 };
 
 /* POST REQUESTS */
@@ -107,22 +95,21 @@ exports.createPet = async (req, res) => {
     }
   }
   */
-  try {
-    const pet = new Pet(req.body);
-    //   petName: req.body.petName,
-    //   species: req.body.species,
-    //   petBreed: req.body.petBreed,
-    //   mixedBreed: req.body.mixedBreed,
-    //   petMarkings: req.body.petMarkings,
-    //   petSex: req.body.petSex,
-    //   petImage: req.body.petImage,
-    //   petOwner: req.body.petOwner
-    // });
-    const newPet = await pet.save();
-    res.status(201).json({ data: newPet });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
+  const pet = {
+    petName: req.body.petName,
+    species: req.body.species,
+    petBreed: req.body.petBreed,
+    mixedBreed: req.body.mixedBreed,
+    petMarkings: req.body.petMarkings,
+    petSex: req.body.petSex,
+    petImage: req.body.petImage,
+    petOwner: req.body.petOwner
+  };
+  const response = await mongodb.getDb().db().collection('pets').insertOne(pet);
+  if (response.acknowledged) {
+    res.status(201).json(response);
+  } else {
+    res.status(404).json({ error: 'Pet could not be created' });
   }
 };
 
@@ -154,18 +141,25 @@ exports.updatePet = async (req, res) => {
     }
   }
   */
-  try {
-    const petId = req.params.id;
-    const pet = req.body;
-    const updatedPet = await Pet.findByIdAndUpdate(petId, pet, { new: true });
-    if (!updatedPet) {
-      res.status(404).json({ error: 'Pet not found' });
-    } else {
-      res.status(200).json({ data: updatedPet });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
+  const petId = new ObjectId(req.params.id);
+  const pet = {
+    petName: req.body.petName,
+    species: req.body.species,
+    petBreed: req.body.petBreed,
+    mixedBreed: req.body.mixedBreed,
+    petMarkings: req.body.petMarkings,
+    petSex: req.body.petSex,
+    petImage: req.body.petImage,
+    petOwner: req.body.petOwner
+  };
+  const response = await mongodb.getDb().db().collection('pets').replaceOne({ _id: petId }, pet);
+  console.log(response);
+  if (response.modifiedCount > 0) {
+    res.status(204).send();
+  } else if (response.modifiedCount <= 0) {
+    res.status(404).json({ error: 'Pet not found' });
+  } else {
+    res.status(500).json({ error: 'An error occurred during the update pet request.' });
   }
 };
 
@@ -186,18 +180,22 @@ exports.updatePetOwnerId = async (req, res) => {
     }
   }
   */
-  try {
-    const petId = req.params.id;
-    const newPetOwner = req.body.petOwner;
-    const pet = await Pet.findByIdAndUpdate(petId, { petOwner: newPetOwner }, { new: true });
-    if (!pet) {
-      res.status(404).json({ error: 'Pet not found' });
-    } else {
-      res.status(200).json({ data: pet });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
+  const thisPetId = new ObjectId(req.params.id);
+  const newPetOwner = {
+    petOwner: req.body.petOwner
+  };
+  const response = await mongodb
+    .getDb()
+    .db()
+    .collection('pets')
+    .updateOne({ _id: thisPetId }, { $set: newPetOwner }, { upsert: false });
+  console.log(response);
+  if (response.modifiedCount > 0) {
+    res.status(204).send();
+  } else if (response.modifiedCount <= 0) {
+    res.status(404).json({ error: 'Pet not found' });
+  } else {
+    res.status(500).json({ error: 'An error occurred during the update pet request.' });
   }
 };
 
@@ -207,16 +205,14 @@ exports.deletePet = async (req, res) => {
   // #swagger.tags = ['Pets']
   // #swagger.summary = 'Delete an existing pet by Id'
   // #swagger.description = 'This will delete a single pet from the database by pet Id. This action is permanent'
-  try {
-    const petId = req.params.id;
-    const pet = await Pet.findByIdAndDelete(petId);
-    if (pet) {
-      res.status(200).json({ message: 'Pet deleted successfully' });
-    } else {
-      res.status(404).json({ error: 'Pet not found' });
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Internal server error' });
+  const petId = new ObjectId(req.params.id);
+  const response = await mongodb.getDb().db().collection('pets').deleteOne({ _id: petId });
+  console.log(response);
+  if (response.deletedCount > 0) {
+    res.status(200).send();
+  } else if (response.deletedCount <= 0) {
+    res.status(404).json({ error: 'Pet not found' });
+  } else {
+    res.status(500).json(response.error || 'An error occured while attempting to delete the pet.');
   }
 };

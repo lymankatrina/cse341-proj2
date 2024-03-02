@@ -1,6 +1,6 @@
 const { body, validationResult } = require('express-validator');
 const { ObjectId } = require('mongodb');
-const mongodb = require('../config/connect');
+const mongodb = require('../db/connect');
 
 const ownerValidationRules = (method) => {
   const rules = [
