@@ -1,5 +1,5 @@
-// const mongoose = require('mongoose');
-// const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // const OwnerSchema = new Schema({
 //   firstName: {
@@ -43,4 +43,4 @@
 //   }]
 // });
 
-// module.exports = mongoose.model("Owner", OwnerSchema);
+module.exports = mongoose.model('Owner', OwnerSchema);

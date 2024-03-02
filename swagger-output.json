@@ -38,17 +38,20 @@
         "tags": [
           "Owners"
         ],
+        "tags": [
+          "Owners"
+        ],
         "summary": "Create an Owner",
         "description": "Create an Owner by providing all required information.",
         "responses": {
           "201": {
             "description": "Created"
           },
-          "404": {
-            "description": "Not Found"
-          },
           "422": {
             "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "requestBody": {
@@ -80,17 +83,26 @@
         "tags": [
           "Owners"
         ],
+        "tags": [
+          "Owners"
+        ],
         "summary": "Get all Owners",
         "description": "This will list all owners in the database",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/owners/getowner/{id}": {
       "get": {
+        "tags": [
+          "Owners"
+        ],
         "tags": [
           "Owners"
         ],
@@ -112,12 +124,18 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/owners/getownerbypet/{petId}": {
       "get": {
+        "tags": [
+          "Owners"
+        ],
         "tags": [
           "Owners"
         ],
@@ -142,12 +160,18 @@
           },
           "500": {
             "description": "Internal Server Error"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/owners/updateowner/{id}": {
       "put": {
+        "tags": [
+          "Owners"
+        ],
         "tags": [
           "Owners"
         ],
@@ -164,8 +188,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           },
           "404": {
             "description": "Not Found"
@@ -202,6 +226,9 @@
     },
     "/owners/updateOwnerPetIds/{id}": {
       "put": {
+        "tags": [
+          "Owners"
+        ],
         "tags": [
           "Owners"
         ],
@@ -251,6 +278,9 @@
         "tags": [
           "Owners"
         ],
+        "tags": [
+          "Owners"
+        ],
         "summary": "Delete an Owner by Id",
         "description": "This will delete a single owner from the database by Id. This action is permanent.",
         "parameters": [
@@ -281,17 +311,20 @@
         "tags": [
           "Pets"
         ],
+        "tags": [
+          "Pets"
+        ],
         "summary": "Create a Pet",
         "description": "Create a Pet by providing all required information.",
         "responses": {
           "201": {
             "description": "Created"
           },
-          "404": {
-            "description": "Not Found"
-          },
           "422": {
             "description": "Unprocessable Entity"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         },
         "requestBody": {
@@ -301,6 +334,10 @@
               "example": {
                 "petName": "Oliver",
                 "species": "DOG",
+                "petBreed": [
+                  "Labrador",
+                  "Poodle"
+                ],
                 "petBreed": [
                   "Labrador",
                   "Poodle"
@@ -321,17 +358,26 @@
         "tags": [
           "Pets"
         ],
+        "tags": [
+          "Pets"
+        ],
         "summary": "Get all Pets",
         "description": "This will list all pets in the database",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/pets/getpet/{id}": {
       "get": {
+        "tags": [
+          "Pets"
+        ],
         "tags": [
           "Pets"
         ],
@@ -353,12 +399,18 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/pets/getpetsbyowner/{petOwnerId}": {
       "get": {
+        "tags": [
+          "Pets"
+        ],
         "tags": [
           "Pets"
         ],
@@ -380,12 +432,18 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/pets/getpetsbyspecies/{species}": {
       "get": {
+        "tags": [
+          "Pets"
+        ],
         "tags": [
           "Pets"
         ],
@@ -407,12 +465,18 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/pets/updatepet/{id}": {
       "put": {
+        "tags": [
+          "Pets"
+        ],
         "tags": [
           "Pets"
         ],
@@ -429,8 +493,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           },
           "404": {
             "description": "Not Found"
@@ -449,6 +513,10 @@
               "example": {
                 "petName": "Oliver",
                 "species": "DOG",
+                "petBreed": [
+                  "Labrador",
+                  "Poodle"
+                ],
                 "petBreed": [
                   "Labrador",
                   "Poodle"
@@ -482,8 +550,8 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
           },
           "404": {
             "description": "Not Found"
@@ -509,6 +577,9 @@
         "tags": [
           "Pets"
         ],
+        "tags": [
+          "Pets"
+        ],
         "summary": "Delete an existing pet by Id",
         "description": "This will delete a single pet from the database by pet Id. This action is permanent",
         "parameters": [
@@ -530,6 +601,19 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }

@@ -1,5 +1,5 @@
-const mongodb = require('../db/connect');
-const ObjectId = require('mongodb').ObjectId;
+// bring in Model
+const Owner = require('../models/Owner');
 
 /* GET REQUESTS */
 // get all owners
@@ -7,11 +7,14 @@ exports.getAllOwners = async (req, res) => {
   // #swagger.tags = ['Owners']
   // #swagger.summary = 'Get all Owners'
   // #swagger.description = 'This will list all owners in the database'
-  const result = await mongodb.getDb().db().collection('owners').find();
-  result.toArray().then((lists) => {
+  try {
+    const owners = await Owner.find();
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).json(lists);
-  });
+    res.status(200).json(owners);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 // get a single owner
@@ -19,16 +22,19 @@ exports.getSingleOwner = async (req, res) => {
   // #swagger.tags = ['Owners']
   // #swagger.summary = 'Get a single owner by ID'
   // #swagger.description = 'This will return a single owner in the database by owner Id'
-  const ownerId = new ObjectId(req.params.id);
-  const result = await mongodb.getDb().db().collection('owners').find({ _id: ownerId });
-  result.toArray().then((lists) => {
-    if (lists.length > 0) {
-      res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(lists[0]);
+  try {
+    const ownerId = req.params.id;
+    const owner = await Owner.findById(ownerId);
+    if (owner) {
+     res.setHeader('Content-Type', 'application/json')
+      res.status(200).json(owner);
     } else {
       res.status(404).json({ error: 'Owner not found' });
     }
-  });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 // get owner by single pet Id
@@ -209,16 +215,17 @@ exports.deleteOwner = async (req, res) => {
   // #swagger.tags = ['Owners']
   // #swagger.summary = 'Delete an Owner by Id'
   // #swagger.description = 'This will delete a single owner from the database by Id. This action is permanent.'
-  const ownerId = new ObjectId(req.params.id);
-  const response = await mongodb.getDb().db().collection('owners').deleteOne({ _id: ownerId });
-  console.log(response);
-  if (response.deletedCount > 0) {
-    res.status(200).send();
-  } else if (response.deletedCount <= 0) {
-    res.status(404).json({ error: 'Owner not found' });
-  } else {
-    res
-      .status(500)
-      .json(response.error || 'An error occured while attempting to delete the owner.');
+  try {
+    const ownerId = req.params.id;
+
+    const owner = await Owner.findByIdAndDelete(ownerId);
+
+    if (!owner) {
+      res.status(404).json({ error: 'Owner not found' });
+    }
+    res.status(200).json({ message: 'Owner deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred while attempting to delete the owner.' });
   }
 };

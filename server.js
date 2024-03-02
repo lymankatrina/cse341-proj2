@@ -1,4 +1,6 @@
 const express = require('express');
+const dotenv = require('dotenv');
+const { connectDb } = require('./config/connect');
 const cors = require('cors');
 const mongodb = require('./db/connect');
 const authMiddleware = require('./middleware/authMiddleware');
@@ -15,12 +17,9 @@ app
   .use(authMiddleware.authMiddleware)
   .use('/', routes);
 
-mongodb.initDb((err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    app.listen(port, () => {
-      console.log(`Connected to DB and Web Server is running on port ${port}`);
-    });
-  }
+  const PORT = process.env.PORT || 3000;
+
+  app.listen(PORT, () => {
+    console.log(`Connected to DB and Web Server is running on port ${PORT}`);
+  });
 });
