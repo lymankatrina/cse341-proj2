@@ -77,10 +77,6 @@ exports.createOwner = async (req, res) => {
           city: "Some City",
           state: "UT",
           zip: 84000,
-          pets: [
-            "65c6f5ecd51fdd04775b0a48",
-            "65c6f5ecd51fdd04775b0a49"
-          ]
         }
       }
     }
