@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const dashboardController = require('../controllers/dashboardController');
 
-router.get('/', dashboardController.welcomeMessage);
+router.get(
+  '/',
+  dashboardController.welcomeMessage // '#swagger.ignore = true'
+);
 
 module.exports = router;

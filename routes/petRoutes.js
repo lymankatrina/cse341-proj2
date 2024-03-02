@@ -1,30 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const petController = require('../controllers/petController');
+const { requiresAuth } = require('express-openid-connect');
 const { petValidationRules, validate } = require('../middleware/validator.js');
 
 // Create a pet
-router.post('/createpet', petValidationRules(), validate, petController.createPet);
+router.post('/createpet', requiresAuth(), petValidationRules(), validate, petController.createPet);
 
+// Get a list of pets without identifiers
+router.get('/getpetsgeneric', petController.getPetsGeneric);
 // Get a list of all pets
-router.get('/getpets', petController.getAllPets);
+router.get('/getpets', requiresAuth(), petController.getAllPets);
 
 // Get a single pet by pet id
-router.get('/getpet/:id', petController.getSinglePet);
+router.get('/getpet/:id', requiresAuth(), petController.getSinglePet);
 
 // Get pets by owner id
-router.get('/getpetsbyowner/:petOwnerId', petController.getPetsByOwner);
+router.get('/getpetsbyowner/:petOwnerId', requiresAuth(), petController.getPetsByOwner);
 
 // Get pets by species
-router.get('/getpetsbyspecies/:species', petController.getPetsBySpecies);
+router.get('/getpetsbyspecies/:species', requiresAuth(), petController.getPetsBySpecies);
 
 // Update a single pet by id
-router.put('/updatepet/:id', petValidationRules(), validate, petController.updatePet);
+router.put(
+  '/updatepet/:id',
+  requiresAuth(),
+  petValidationRules(),
+  validate,
+  petController.updatePet
+);
 
 // Update pet owner by id
-router.put('/updatepetowner/:id', petController.updatePetOwnerId);
+router.put('/updatepetowner/:id', requiresAuth(), petController.updatePetOwnerId);
 
-// Delete an pet
-router.delete('/deletepet/:id', petController.deletePet);
+// Delete a pet
+router.delete('/deletepet/:id', requiresAuth(), petController.deletePet);
 
 module.exports = router;
