@@ -8,7 +8,7 @@ const { ownerValidationRules, validate } = require('../middleware/validator.js')
 router.post(
   '/createowner',
   requiresAuth(),
-  ownerValidationRules(),
+  ownerValidationRules('POST'),
   validate,
   ownerController.createOwner
 );
@@ -26,7 +26,7 @@ router.get('/getownerbypet/:petId', requiresAuth(), ownerController.getOwnerByPe
 router.put(
   '/updateowner/:id',
   requiresAuth(),
-  ownerValidationRules(),
+  ownerValidationRules('PUT'),
   validate,
   ownerController.updateOwner
 );

@@ -1,5 +1,6 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
+const { validationResult } = require('express-validator');
 
 /* GET REQUESTS */
 // get all owners
@@ -109,7 +110,6 @@ exports.updateOwner = async (req, res) => {
   // #swagger.summary = 'Update an Owner by Id'
   // #swagger.description = 'Update an existing owner by providing all required information.'
   /*
-  /*
   #swagger.requestBody = {
     required: true,
     content: {
@@ -132,6 +132,10 @@ exports.updateOwner = async (req, res) => {
     }
   }
   */
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const ownerId = new ObjectId(req.params.id);
   const owner = {
     firstName: req.body.firstName,

@@ -2,7 +2,7 @@ const { body, validationResult } = require('express-validator');
 const { ObjectId } = require('mongodb');
 const mongodb = require('../db/connect');
 
-const ownerValidationRules = (method) => {
+const ownerValidationRules = () => {
   const rules = [
     // first name validation
     body('firstName')
@@ -17,7 +17,7 @@ const ownerValidationRules = (method) => {
     // birthdate validation
     body('birthdate')
       .notEmpty()
-      .matches(/^(0[1-9]|1[1,2])(\/|-)(0[1-9]|[12][0-9]|3[01])(\/|-)(19|20)\d{2}$/)
+      .matches(/^(0[1-9]|1[0,1,2])(\/|-)(0[1-9]|[12][0-9]|3[01])(\/|-)(19|20)\d{2}$/)
       .withMessage('Must be a valid date MM/DD/YYYY'),
     // phone number validation
     body('phone')
@@ -25,6 +25,36 @@ const ownerValidationRules = (method) => {
       .isInt()
       .isLength({ min: 10, max: 10 })
       .withMessage('Must be a 10 digit US Phone Number without any spaces, dashes, or dots.'),
+    // Add email validation rule for POST and PUT requests
+    body('email')
+      .notEmpty()
+      .withMessage('Email is required')
+      .trim() // delete leading and trailing space
+      .normalizeEmail() // convert to lowercase
+      .isEmail()
+      .withMessage('Must be a valid email')
+      .custom(async (value, { req }) => {
+        if (req.method === 'POST') {
+          const existingUser = await mongodb
+            .getDb()
+            .db()
+            .collection('owners')
+            .findOne({ email: value });
+          if (existingUser) {
+            throw new Error('Email already in use');
+          }
+        } else if (req.method === 'PUT') {
+          const existingUser = await mongodb
+            .getDb()
+            .db()
+            .collection('owners')
+            .findOne({ email: value });
+          if (existingUser && existingUser._id.toString() !== req.params.id) {
+            throw new Error('Email already in use');
+          }
+        }
+        return true;
+      }),
     // address validation
     body('address')
       .notEmpty()
@@ -73,29 +103,6 @@ const ownerValidationRules = (method) => {
         return true; // Validation passed
       })
   ];
-
-  // Add email validation rule for POST requests
-  if (method === 'POST') {
-    rules.push(
-      body('email')
-        .notEmpty()
-        .isEmail()
-        .withMessage('Must be a valid email')
-        .custom(async (value) => {
-          const existingOwner = await mongodb
-            .getDb()
-            .db()
-            .collection('owners')
-            .findOne({ email: value });
-
-          if (existingOwner) {
-            throw new Error('Owner with this email address already exists');
-          }
-
-          return true; // Validation passed
-        })
-    );
-  }
 
   return rules;
 };
@@ -169,7 +176,9 @@ const validate = (req, res, next) => {
   }
 
   const extractedErrors = [];
-  errors.array().map((err) => extractedErrors.push({ [err.path]: err.msg }));
+  errors
+    .array({ onlyFirstError: true })
+    .map((err) => extractedErrors.push({ [err.path]: err.msg }));
 
   return res.status(422).json({
     errors: extractedErrors
